@@ -1,4 +1,6 @@
-﻿namespace CustomPicker;
+﻿using CommunityToolkit.Maui;
+
+namespace CustomPicker;
 
 public static class MauiProgram
 {
@@ -6,7 +8,24 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()
+#if DEBUG
+            .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkit()
+#else
+			.UseMauiCommunityToolkit(options =>
+			{
+				options.SetShouldSuppressExceptionsInConverters(false);
+				options.SetShouldSuppressExceptionsInBehaviors(false);
+				options.SetShouldSuppressExceptionsInAnimations(false);
+			})
+			.UseMauiCommunityToolkit(options =>
+			{
+				options.SetShouldSuppressExceptionsInConverters(false);
+				options.SetShouldSuppressExceptionsInBehaviors(false);
+				options.SetShouldSuppressExceptionsInAnimations(false);
+			})
+#endif
+            .UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
